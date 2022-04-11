@@ -18,7 +18,14 @@ if ((0 -eq $usb_port) -or (0 -eq $cmd))
 	echo ""
 	echo ""
 	
-	[System.IO.Ports.SerialPort]::getportnames()
+	$portList = get-pnpdevice -class Ports -ea 0
+	if ($portList) {
+	 foreach($device in $portList) {
+		  if ($device.Present) {
+			   Write-Host $device.Name "(Manufacturer:"$device.Manufacturer")"
+		  }
+	 }
+	}
 
 }
 else
