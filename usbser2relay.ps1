@@ -2,7 +2,7 @@
  # USB relay module: LCUS-1 (http://images.100y.com.tw/pdf_file/57-LCUS-1.pdf)
  #>
 
-param ([Int] $usb_port=0, [String] $com_port= "COM44", [int] $cmd=0)
+param ([String] $com_port= "COM44",[Int] $usb_port=0, [String] $cmd=0)
 
 #echo "$com_port to usb $usb_port"
 
@@ -10,13 +10,15 @@ if ((0 -eq $usb_port) -or (0 -eq $cmd))
 {
 	
 	$scriptName = $myInvocation.myCommand.name
-	echo "$scriptName usb_port com_port cmd"
+	echo "$scriptName com_port relay_port cmd"
 	echo "1:on_off"
 	echo "2:on"
 	echo "3:off"
-	echo "4:offon"
+	echo "4:off_on"
 	echo ""
 	echo ""
+	
+	#[System.IO.Ports.SerialPort]::getportnames()
 	
 	$portList = get-pnpdevice -class Ports -ea 0
 	if ($portList) {
@@ -45,26 +47,26 @@ else
 	$port.open()
 	
 	
-	if (1 -eq $cmd)
+	if (("1" -eq $cmd) -or ("on_off" -eq $cmd))
 	{
 		$port.Write($cmdON, 0, $cmdON.Count)
 		Start-Sleep -s 1.5
 		$port.Write($cmdOFF, 0, $cmdOFF.Count)
 	}
 
-	if (4 -eq $cmd) 
+	if (("4" -eq $cmd) -or ("off_on" -eq $cmd))
 	{
 		$port.Write($cmdOFF, 0, $cmdOFF.Count)
 		Start-Sleep -s 1.5
 		$port.Write($cmdON, 0, $cmdON.Count)
 	}
 	
-	if (2 -eq $cmd)
+	if (("2" -eq $cmd) -or ("on" -eq $cmd))
 	{
 		$port.Write($cmdON, 0, $cmdON.Count)
 	}
 	
-	if (3 -eq $cmd)
+	if (("3" -eq $cmd) -or ("off" -eq $cmd))
 	{
 		$port.Write($cmdOFF, 0, $cmdOFF.Count)
 	}
