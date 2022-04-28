@@ -6,28 +6,31 @@
 #     $ sudo /bin/sh -c "echo -n -e '\xA0\x01\x01\xA2' > /dev/ttyUSB1" # COM-NO
 #     $ sudo /bin/sh -c "echo -n -e '\xA0\x01\x00\xA1' > /dev/ttyUSB1" # COM-NC
 
-HEX_CODE_OFF='\xA0\x01\x01\xA2'
-HEX_CODE_ON='\xA0\x01\x00\xA1'
+HEX_CODE_OFF='\xA0\x01\x00\xA2'
+HEX_CODE_ON='\xA0\x01\x01\xA1'
 ROOT_UID=0
 
+
+
 serdev="$1"
-op="$2"
+op="$3"
+port=$2
 argv="$#"
 
 usage() {
 	cat <<EOF
 
-Usage: $0 <path_to_tty_device> <0|1>
+Usage: $0 <path_to_tty_device> <relay_number> <0|1>
        0: Turn the Relay OFF
        1: Turn the Relay ON
 
-EX: $0 /dev/ttyUSB1 0
+EX: $0 /dev/ttyUSB1 4 0
 
 EOF
 }
 
 do_init() {
-	if [ "$argv" != "2" ] || [ "$op" = "" ]; then
+	if [ "$argv" != "3" ] || [ "$op" = "" ]; then
 		usage
 		exit 1
 	fi
@@ -58,6 +61,15 @@ hex2ser() {
 }
 
 ser2relay() {
+
+#echo $port
+let c=161+$port
+let c1=160+$port
+#echo $c
+HEX_CODE_ON=$(printf "\\\xA0\\\x%02x\\\x01\\\x%02x" "$port" "$c")
+HEX_CODE_OFF=$(printf "\\\xA0\\\x%02x\\\x00\\\x%02x" "$port" "$c1")
+
+
 	case "$op" in
 	1|[Oo][Nn])
 		hex2ser "ON"
