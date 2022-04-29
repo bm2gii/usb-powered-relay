@@ -1,13 +1,13 @@
 # usb-powered-relay
-for LCUS-1 5V USB Relay Module CH340 USB Control Switch **in LINUX**
+for LCUS-4 5V USB Relay Module CH340 USB Control Switch **in LINUX**
 
-![](LCUS-1-5V-USB-Relay-Module.png)
+![](LCUS-4-5V-USB-Relay-Module.jfif)
 
 Baud Rate: 9600bps
 
 ## HowTo
 
-	Usage: ./usbser2relay.sh <path_to_tty_device> <0|1>
+	Usage: ./usbser2relay.sh <path_to_tty_device> <relay_number> <0|1>
 		   0: Turn the Relay ON
 		   1: Turn the Relay OF
 
@@ -15,4 +15,4 @@ Baud Rate: 9600bps
 
 Example:
 
-	# ./usbser2relay.sh /dev/ttyUSB1 0
+	# ./usbser2relay.sh /dev/ttyUSB1 0 0
