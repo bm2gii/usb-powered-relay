@@ -35,9 +35,11 @@ do_init() {
 		exit 1
 	fi
 
-	if [ "$UID" -ne "$ROOT_UID" ] ;then
-		echo "Warning: you should run the script with root permission!"
-		exit 1
+	if [ "$(expr substr $(uname -s) 1 6)" != "CYGWIN" ] ;then
+		if [ "$UID" -ne "$ROOT_UID" ] ;then
+			echo "Warning: you should run the script with root permission!"
+			exit 1
+		fi
 	fi
 
 	if [ ! -c "$serdev"  ]; then
