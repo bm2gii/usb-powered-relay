@@ -20,9 +20,11 @@ argv="$#"
 usage() {
 	cat <<EOF
 
-Usage: $0 <path_to_tty_device> <relay_number> <0|1>
+Usage: $0 <path_to_tty_device> <relay_number> <0|1|01|10>
        0: Turn the Relay OFF
        1: Turn the Relay ON
+      01: Relay OFF and then ON
+      10: Relay ON and then OFF
 
 EX: $0 /dev/ttyUSB1 4 0
 
@@ -78,6 +80,16 @@ HEX_CODE_OFF=$(printf "\\\xA0\\\x%02x\\\x00\\\x%02x" "$port" "$c1")
 		hex2ser "ON"
 		;;
 	0|[Oo][Ff][Ff])
+		hex2ser "OFF"
+		;;
+	01)
+		hex2ser "OFF"
+		sleep 1.5
+		hex2ser "ON"
+		;;
+	10)
+		hex2ser "ON"
+		sleep 1.5
 		hex2ser "OFF"
 		;;
 	*)
