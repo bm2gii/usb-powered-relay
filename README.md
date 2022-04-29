@@ -8,8 +8,8 @@ Baud Rate: 9600bps
 ## HowTo
 
 	Usage: ./usbser2relay.sh <path_to_tty_device> <relay_number> <0|1>
-		   0: Turn the Relay ON
-		   1: Turn the Relay OF
+		   0: Turn the Relay OFF
+		   1: Turn the Relay ON
 
 **note**: you should run the script with root permission!
 
