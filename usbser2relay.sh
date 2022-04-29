@@ -35,7 +35,8 @@ do_init() {
 		exit 1
 	fi
 
-	if [ "$(expr substr $(uname -s) 1 6)" != "CYGWIN" ] ;then
+	host="$(expr substr $(uname -s) 1 5)"
+	if [[ "$host" != "CYGWI" && "$host" != "MINGW" ]] ;then
 		if [ "$UID" -ne "$ROOT_UID" ] ;then
 			echo "Warning: you should run the script with root permission!"
 			exit 1
