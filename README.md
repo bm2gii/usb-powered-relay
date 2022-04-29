@@ -1,6 +1,8 @@
 # usb-powered-relay
 for LCUS-4 5V USB Relay Module CH340 USB Control Switch **in LINUX**
 
+http://www.chinalctech.com/cpzx/32.html
+
 ![](LCUS-4-5V-USB-Relay-Module.jfif)
 
 Baud Rate: 9600bps
