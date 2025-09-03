@@ -54,6 +54,7 @@ Error: There is no device node: ${serdev}
 EOF
 		exit 1
 	fi
+    stty -F  $serdev 9600
 }
 
 hex2ser() {
