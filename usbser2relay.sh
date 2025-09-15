@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 # USB relay module: LCUS-1 (http://images.100y.com.tw/pdf_file/57-LCUS-1.pdf)
 #
@@ -60,9 +60,9 @@ EOF
 hex2ser() {
 	local action="$1"
 	if [ "$action" = "ON" ]; then
-		/bin/sh -c "echo -n -e '$HEX_CODE_ON' > $serdev"
+		/bin/bash -c "echo -n -e '$HEX_CODE_ON' > $serdev"
 	else
-		/bin/sh -c "echo -n -e '$HEX_CODE_OFF' > $serdev"
+		/bin/bash -c "echo -n -e '$HEX_CODE_OFF' > $serdev"
 	fi
 }
 
