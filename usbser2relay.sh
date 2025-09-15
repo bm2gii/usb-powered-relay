@@ -41,7 +41,7 @@ do_init() {
 	if [[ "$host" != "CYGWI" && "$host" != "MINGW" ]] ;then
 		if [ "$UID" -ne "$ROOT_UID" ] ;then
 			echo "Warning: you should run the script with root permission!"
-			exit 1
+			#exit 1
 		fi
 	fi
 
