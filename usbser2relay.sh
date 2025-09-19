@@ -16,6 +16,7 @@ serdev="$1"
 op="$3"
 port=$2
 argv="$#"
+retryCount=5
 
 usage() {
 	cat <<EOF
@@ -59,11 +60,25 @@ EOF
 
 hex2ser() {
 	local action="$1"
+ 	local count=$retryCount
+	local pass=0
+	local r=0
+
+ while [ $count -gt 0 ] && [ $pass -eq 0 ]; do
 	if [ "$action" = "ON" ]; then
 		/bin/bash -c "echo -n -e '$HEX_CODE_ON' > $serdev"
 	else
 		/bin/bash -c "echo -n -e '$HEX_CODE_OFF' > $serdev"
 	fi
+ 	r=$?
+	#echo "r:$?:$r"
+	if [ $r -eq 0 ]; then
+		pass=1
+	fi
+
+	((count--))
+	#echo "count=$count, pass=$pass"
+	done
 }
 
 ser2relay() {
